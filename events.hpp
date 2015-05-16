@@ -1,8 +1,7 @@
 #ifndef EVENTS_H
 #define EVENTS_H
 
-#include <cstdio>
-#include <cstdlib>
+#include <ctime>
 #include "command.hpp"
 #include "world.hpp"
 

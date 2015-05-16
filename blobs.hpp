@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <cmath>
 #include <ctime>
-#include <cfloat>
-#include <cstdlib>
 #include "configs.hpp"
 #include "vectors.hpp"
 

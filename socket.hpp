@@ -1,7 +1,9 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#include <boost/asio.hpp>
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/buffer.hpp>
+#include <boost/asio/ip/udp.hpp>
 #include <cstdint>
 #include "logger.hpp"
 
