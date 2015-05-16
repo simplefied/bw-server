@@ -37,8 +37,3 @@ void Socket::Write(const endpoint &remote_ep, const string &msg)
     }
     if (size != msg.size()) Logger::Notice("Warning: partial write.");
 }
-
-bool Socket::Available()
-{
-    return socket.available() > 0;
-}

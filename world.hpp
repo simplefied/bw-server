@@ -14,6 +14,12 @@ class World
 {
 public:
     World();
+    World(World&) = delete;
+    World(World&&) = delete;
+    World& operator=(const World&) = delete;
+    World& operator=(World&&) = delete;
+    ~World() = default;
+
     void Birth(std::string name);
     Blobs::Player &GetBlob(std::string name);
     const std::list<Blobs::Player> &GetPlayers() const;
@@ -23,9 +29,9 @@ public:
     void Step();
 private:
     friend class Collider;
-    void AddMeat(point2f position);
     void RoutePoisons();
     std::string CalcTarget();
+    void AddMeat(point2f position);
     point2f GetSpawnPoint(point2f position, float radius);
     std::list<Blobs::Player> players;
     std::list<Blobs::Poison> poisons;

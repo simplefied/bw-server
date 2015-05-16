@@ -1,4 +1,6 @@
 # bw-server
 Bacterium Wars game server
 
-See more on: http://bacteriumwars.ga/
+Game site: http://bacteriumwars.ga/
+
+License: GNU GPLv3, see more in LICENSE file

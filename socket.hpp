@@ -14,7 +14,6 @@ public:
     Socket(std::uint16_t port);
     std::string Read(endpoint &remote_ep, bool &cache_is_empty);
     void Write(const endpoint &remote_ep, const std::string &msg);
-    bool Available();
 private:
     boost::asio::io_service ios;
     boost::asio::ip::udp::socket socket;
