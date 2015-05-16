@@ -22,14 +22,14 @@ namespace Blobs {
         float size_;
     };
 
-    class Movable_Blob : public Blob
+    class MovableBlob : public Blob
     {
     public:
-        virtual ~Movable_Blob() = default;
+        virtual ~MovableBlob() = default;
         vector2f &Direction();
         void Step();
     protected:
-        Movable_Blob(point2f position, float size);
+        MovableBlob(point2f position, float size);
         vector2f direction_;
     };
 
@@ -39,7 +39,7 @@ namespace Blobs {
         Meat(point2f position);
     };
 
-    class Player : public Movable_Blob
+    class Player : public MovableBlob
     {
     public:
         Player(point2f position, const std::string &name);
@@ -52,7 +52,7 @@ namespace Blobs {
         time_t born_time_;
     };
 
-    class Poison : public Movable_Blob
+    class Poison : public MovableBlob
     {
     public:
         Poison(point2f position, float size);

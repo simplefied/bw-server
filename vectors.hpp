@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+// TODO Rewrite all operators to non-member functions
+
 struct vector2f;
 
 struct point2f{

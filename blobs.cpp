@@ -22,16 +22,16 @@ float Blobs::Blob::Size() const
     return size_;
 }
 
-Blobs::Movable_Blob::Movable_Blob(point2f position, float size) : Blob(position, size)
+Blobs::MovableBlob::MovableBlob(point2f position, float size) : Blob(position, size)
 {
 }
 
-vector2f &Blobs::Movable_Blob::Direction()
+vector2f &Blobs::MovableBlob::Direction()
 {
     return direction_;
 }
 
-void Blobs::Movable_Blob::Step()
+void Blobs::MovableBlob::Step()
 {
     position_ += direction_*Configs::Float("speed_factor")*(1.0 - size_/Configs::Float("players_max_size"));
 }
@@ -41,7 +41,7 @@ Blobs::Meat::Meat(point2f position) : Blob(position, Configs::Float("meats_size"
 }
 
 Blobs::Player::Player(point2f position, const std::string &name)
-: Movable_Blob(position, Configs::Float("players_min_size")), name_(name)
+: MovableBlob(position, Configs::Float("players_min_size")), name_(name)
 {
     born_time_ = time(nullptr);
 }
@@ -66,7 +66,7 @@ void Blobs::Player::Eat(float eat_size)
     size_ = static_cast<float>(sqrt(pow(size_, 2) + pow(eat_size, 2)));
 }
 
-Blobs::Poison::Poison(point2f position, float size) : Movable_Blob(position, size)
+Blobs::Poison::Poison(point2f position, float size) : MovableBlob(position, size)
 {
 }
 
