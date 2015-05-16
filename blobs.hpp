@@ -14,57 +14,53 @@ namespace Blobs {
     class Blob
     {
     public:
-        virtual point2f Position() const = 0;
-        virtual float Size() const = 0;
         virtual ~Blob() = default;
+        point2f Position() const;
+        void CorrectPosition(vector2f offset);
+        float Size() const;
+    protected:
+        Blob(point2f position, float size);
+        point2f position_;
+        float size_;
+    };
+
+    class Movable_Blob : public Blob
+    {
+    public:
+        virtual ~Movable_Blob() = default;
+        vector2f &Direction();
+        void Step();
+    protected:
+        Movable_Blob(point2f position, float size);
+        vector2f direction_;
     };
 
     class Meat : public Blob
     {
     public:
         Meat(point2f position);
-        virtual point2f Position() const;
-        virtual float Size() const;
-    private:
-        point2f pos;
-        float size;
     };
 
-    class Player : public Blob
+    class Player : public Movable_Blob
     {
     public:
-        Player(point2f position, const std::string &pname);
-        virtual point2f Position() const;
-        virtual float Size() const;
-        vector2f &Direction();
+        Player(point2f position, const std::string &name);
         const std::string &Name() const;
         const time_t &BornTime() const;
-        void CorrectPosition(vector2f offset);
         void Heal(float eat_size);
         void Eat(float eat_size);
-        void Step();
     private:
-        std::string name;
-        point2f pos;
-        vector2f dir;
-        float size;
-        time_t born_time;
+        std::string name_;
+        time_t born_time_;
     };
 
-    class Poison : public Blob
+    class Poison : public Movable_Blob
     {
     public:
-        Poison(point2f position, float psize);
-        virtual point2f Position() const;
-        virtual float Size() const;
-        vector2f &Direction();
+        Poison(point2f position, float size);
         std::string &Target();
-        void Step();
     private:
-        std::string target;
-        point2f pos;
-        vector2f dir;
-        float size;
+        std::string target_;
     };
 }
 

@@ -2,100 +2,75 @@
 
 using namespace std;
 
-Blobs::Meat::Meat(point2f position) : pos(position)
+Blobs::Blob::Blob(point2f position, float size) : position_(position), size_(size)
 {
-    size = Configs::GetFloat("meats_size");
 }
 
-point2f Blobs::Meat::Position() const
+point2f Blobs::Blob::Position() const
 {
-    return pos;
+    return position_;
 }
 
-float Blobs::Meat::Size() const
+void Blobs::Blob::CorrectPosition(vector2f offset)
 {
-    return size;
+    if (offset.length() > size_) return;
+    position_ += offset;
 }
 
-Blobs::Player::Player(point2f position, const std::string &pname) : name(pname), pos(position)
+float Blobs::Blob::Size() const
 {
-    size = Configs::GetFloat("players_min_size");
-    born_time = time(nullptr);
+    return size_;
 }
 
-point2f Blobs::Player::Position() const
+Blobs::Movable_Blob::Movable_Blob(point2f position, float size) : Blob(position, size)
 {
-    return pos;
 }
 
-float Blobs::Player::Size() const
+vector2f &Blobs::Movable_Blob::Direction()
 {
-    return size;
+    return direction_;
 }
 
-vector2f &Blobs::Player::Direction()
+void Blobs::Movable_Blob::Step()
 {
-    return dir;
+    position_ += direction_*Configs::GetFloat("speed_factor")*(1.0 - size_/Configs::GetFloat("players_max_size"));
+}
+
+Blobs::Meat::Meat(point2f position) : Blob(position, Configs::GetFloat("meats_size"))
+{
+}
+
+Blobs::Player::Player(point2f position, const std::string &name)
+: Movable_Blob(position, Configs::GetFloat("players_min_size")), name_(name)
+{
+    born_time_ = time(nullptr);
 }
 
 const std::string &Blobs::Player::Name() const
 {
-    return name;
+    return name_;
 }
 
 const time_t &Blobs::Player::BornTime() const
 {
-    return born_time;
-}
-
-void Blobs::Player::CorrectPosition(vector2f offset)
-{
-    if (offset.length() > size) return;
-    pos += offset;
+    return born_time_;
 }
 
 void Blobs::Player::Heal(float eat_size)
 {
-    this->size = static_cast<float>(sqrt(max(1.0, pow(this->size, 2) - pow(eat_size, 2))));
+    size_ = static_cast<float>(sqrt(max(1.0, pow(size_, 2) - pow(eat_size, 2))));
 }
 
 void Blobs::Player::Eat(float eat_size)
 {
-    this->size = static_cast<float>(sqrt(pow(this->size, 2) + pow(eat_size, 2)));
+    size_ = static_cast<float>(sqrt(pow(size_, 2) + pow(eat_size, 2)));
 }
 
-void Blobs::Player::Step()
+Blobs::Poison::Poison(point2f position, float size) : Movable_Blob(position, size)
 {
-    pos += dir*Configs::GetFloat("speed_factor")*(1.0 - size/Configs::GetFloat("players_max_size"));
-}
-
-
-Blobs::Poison::Poison(point2f position, float psize) : pos(position), size(psize)
-{
-
-}
-
-point2f Blobs::Poison::Position() const
-{
-    return pos;
-}
-
-float Blobs::Poison::Size() const
-{
-    return size;
-}
-
-vector2f &Blobs::Poison::Direction()
-{
-    return dir;
 }
 
 string &Blobs::Poison::Target()
 {
-    return target;
-}
-
-void Blobs::Poison::Step()
-{
-    pos += dir*Configs::GetFloat("speed_factor")*(1.0 - size/Configs::GetFloat("players_max_size"));
+    return target_;
 }
