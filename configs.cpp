@@ -38,7 +38,7 @@ void Configs::Load(string path)
     }
 }
 
-int Configs::GetInt(string name)
+int Configs::Int(string name)
 {
     if (!ints.count(name)) {
         Logger::Error(name + " parameter isn't present in config file.");
@@ -46,7 +46,7 @@ int Configs::GetInt(string name)
     return ints[name];
 }
 
-float Configs::GetFloat(string name)
+float Configs::Float(string name)
 {
     if (!floats.count(name)) {
         Logger::Error(name + " parameter isn't present in config file.");

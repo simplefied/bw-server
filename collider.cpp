@@ -37,8 +37,8 @@ void Collider::CollidePvM()
         if (!pair.first) world_.meats.push_back(pair.second);
     }
 
-    while (world_.meats.size() < Configs::GetInt("meats_count")) {
-        world_.AddMeat(world_.GetSpawnPoint(point2f(0, 0), Configs::GetFloat("world_radius") - Configs::GetFloat("meats_size") - 1));
+    while (world_.meats.size() < Configs::Int("meats_count")) {
+        world_.AddMeat(world_.GetSpawnPoint(point2f(0, 0), Configs::Float("world_radius") - Configs::Float("meats_size") - 1));
     }
 }
 
@@ -74,8 +74,8 @@ void Collider::CollideWithWorld()
     for (auto &player : world_.players) {
         vector2f wv = point2f(0, 0) - player.Position();
         float radius = wv.length() + player.Size();
-        if (radius <= Configs::GetFloat("world_radius")) continue;
-        player.CorrectPosition(wv.normalize()*(radius - Configs::GetFloat("world_radius")));
+        if (radius <= Configs::Float("world_radius")) continue;
+        player.CorrectPosition(wv.normalize()*(radius - Configs::Float("world_radius")));
     }
 }
 
@@ -94,7 +94,7 @@ void Collider::CollideWithPoison()
         for (auto small = temp_poisons.begin(); small != temp_poisons.end(); ++small) {
             if (small->first) continue;
             if ((big->Position() - small->second.Position()).length() < big->Size()) {
-                if (big->Size() >= Configs::GetFloat("players_min_size")) {
+                if (big->Size() >= Configs::Float("players_min_size")) {
                     big->Heal(small->second.Size());
                     small->first = true;
                 }
@@ -104,7 +104,7 @@ void Collider::CollideWithPoison()
 
     world_.players.clear();
     for (auto player : temp_players) {
-        if (player.Size() >= Configs::GetFloat("players_min_size")) world_.players.push_back(player);
+        if (player.Size() >= Configs::Float("players_min_size")) world_.players.push_back(player);
     }
     world_.poisons.clear();
     for (auto pair : temp_poisons) {

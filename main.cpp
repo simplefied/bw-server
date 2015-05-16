@@ -13,13 +13,13 @@ using namespace std;
 int main()
 {
     Configs::Load("server.conf");
-    Socket socket(Configs::GetInt("server_port"));
+    Socket socket(Configs::Int("server_port"));
     Clients clients;
     World world;
     EncDecManager edman(world);
     Collider collider(world);
 
-    long int frame_time = 1000/Configs::GetInt("server_fps");
+    long int frame_time = 1000/Configs::Int("server_fps");
     clock_t begin_frame;
     while (true) {
         begin_frame = clock();
@@ -41,7 +41,7 @@ int main()
                 }
                 else if (clients.Registered(remote_ep)) edman.Decode(msg);
             }
-            if (rand()%Configs::GetInt("not_healing_chance") == 0) world.Heal();
+            if (rand()%Configs::Int("not_healing_chance") == 0) world.Heal();
             world.Step();
         }
         long int millis_est = lround(static_cast<float>(clock() - begin_frame)/CLOCKS_PER_SEC*1000);

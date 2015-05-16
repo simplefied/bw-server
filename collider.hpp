@@ -10,6 +10,10 @@ class Collider
 {
 public:
     Collider(World &world);
+    Collider(Collider&) = delete;
+    Collider(Collider&&) = delete;
+    Collider& operator=(const Collider&) = delete;
+    Collider& operator=(Collider&&) = delete;
     void Collide();
 private:
     void CollidePvM();

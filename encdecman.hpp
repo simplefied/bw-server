@@ -17,6 +17,10 @@ class EncDecManager
 {
 public:
     EncDecManager(World &world_);
+    EncDecManager(EncDecManager&) = delete;
+    EncDecManager(EncDecManager&&) = delete;
+    EncDecManager& operator=(const EncDecManager&) = delete;
+    EncDecManager& operator=(EncDecManager&&) = delete;
     void Decode(std::string &msg);
     std::string Encode();
 private:

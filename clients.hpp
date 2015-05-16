@@ -8,6 +8,10 @@ class Clients
 {
 public:
     Clients();
+    Clients(Clients&) = delete;
+    Clients(Clients&&) = delete;
+    Clients& operator=(const Clients&) = delete;
+    Clients& operator=(Clients&&) = delete;
     typedef std::set<Socket::endpoint> collection;
     bool Registered(const Socket::endpoint &ep) const;
     void Register(const Socket::endpoint &ep);

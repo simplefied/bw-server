@@ -10,11 +10,11 @@
 class Configs
 {
 public:
+    Configs() = delete;
     static void Load(std::string path);
-    static int GetInt(std::string name);
-    static float GetFloat(std::string name);
+    static int Int(std::string name);
+    static float Float(std::string name);
 private:
-    Configs() = default;
     static std::map<std::string, int> ints;
     static std::map<std::string, float> floats;
 };

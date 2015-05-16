@@ -7,10 +7,9 @@
 class Logger
 {
 public:
+    Logger() = delete;
     static void Error(std::string msg);
     static void Notice(std::string msg);
-private:
-    Logger();
 };
 
 #endif // LOGGER_H

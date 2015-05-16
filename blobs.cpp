@@ -33,15 +33,15 @@ vector2f &Blobs::Movable_Blob::Direction()
 
 void Blobs::Movable_Blob::Step()
 {
-    position_ += direction_*Configs::GetFloat("speed_factor")*(1.0 - size_/Configs::GetFloat("players_max_size"));
+    position_ += direction_*Configs::Float("speed_factor")*(1.0 - size_/Configs::Float("players_max_size"));
 }
 
-Blobs::Meat::Meat(point2f position) : Blob(position, Configs::GetFloat("meats_size"))
+Blobs::Meat::Meat(point2f position) : Blob(position, Configs::Float("meats_size"))
 {
 }
 
 Blobs::Player::Player(point2f position, const std::string &name)
-: Movable_Blob(position, Configs::GetFloat("players_min_size")), name_(name)
+: Movable_Blob(position, Configs::Float("players_min_size")), name_(name)
 {
     born_time_ = time(nullptr);
 }

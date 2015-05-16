@@ -26,7 +26,7 @@ string EncDecManager::Encode()
     string ans;
     sprintf(buf, "%s\n", PROTOCOL_VERSION);
     ans += string(buf);
-    sprintf(buf, "%.1f\n", Configs::GetFloat("world_radius"));
+    sprintf(buf, "%.1f\n", Configs::Float("world_radius"));
     ans += string(buf);
     for (auto player : players) {
         point2f pos = player.Position();

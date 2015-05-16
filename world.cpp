@@ -5,8 +5,8 @@ using namespace std;
 World::World()
 {
     srand(static_cast<unsigned int>(time(nullptr)));
-    for(int i=0; i<Configs::GetInt("meats_count"); ++i) {
-        AddMeat(GetSpawnPoint(point2f(0, 0), Configs::GetFloat("world_radius") - Configs::GetFloat("meats_size") - 1));
+    for(int i=0; i<Configs::Int("meats_count"); ++i) {
+        AddMeat(GetSpawnPoint(point2f(0, 0), Configs::Float("world_radius") - Configs::Float("meats_size") - 1));
     }
 }
 
@@ -18,7 +18,7 @@ void World::Birth(string name)
             break;
         }
     }
-    point2f spawn_point = GetSpawnPoint(point2f(0, 0), Configs::GetFloat("world_radius") - Configs::GetFloat("players_min_size") - 1);
+    point2f spawn_point = GetSpawnPoint(point2f(0, 0), Configs::Float("world_radius") - Configs::Float("players_min_size") - 1);
     Blobs::Player blob(spawn_point, name);
     players.push_back(blob);
 }
@@ -56,16 +56,16 @@ void World::Heal()
     for (auto player : players) {
         mass += lround(pow(player.Size(), 2));
     }
-    if (mass / players.size() <= lround(pow(Configs::GetFloat("players_min_size"), 2))) return;
+    if (mass / players.size() <= lround(pow(Configs::Float("players_min_size"), 2))) return;
     mass >>= 1;
 
-    long min_mass = Configs::GetInt("poisons_min_mass");
-    long max_mass = Configs::GetInt("poisons_max_mass");
-    for (int i = 0; i < Configs::GetInt("max_poisons_count"); ++i) {
+    long min_mass = Configs::Int("poisons_min_mass");
+    long max_mass = Configs::Int("poisons_max_mass");
+    for (int i = 0; i < Configs::Int("max_poisons_count"); ++i) {
         if (mass < min_mass) break;
         long pmass = rand()%(max_mass - min_mass + 1) + min_mass;
         mass -= pmass;
-        float radius = Configs::GetFloat("world_radius") - static_cast<float>(sqrt(Configs::GetInt("poisons_max_mass"))) - 1;
+        float radius = Configs::Float("world_radius") - static_cast<float>(sqrt(Configs::Int("poisons_max_mass"))) - 1;
         Blobs::Poison poison(GetSpawnPoint(point2f(0, 0), radius), static_cast<float>(sqrt(pmass)));
         poison.Target() = CalcTarget();
         poisons.push_back(poison);
@@ -75,9 +75,9 @@ void World::Heal()
 void World::Step()
 {
     for (auto piter = players.begin(); piter != players.end(); ++piter) {
-        if (piter->Size() > Configs::GetFloat("players_max_size")) {
-            for (int i = 0; i < Configs::GetInt("meats_count")*2; ++i){
-                AddMeat(GetSpawnPoint(piter->Position(), piter->Size() - Configs::GetFloat("meats_size") - 1));
+        if (piter->Size() > Configs::Float("players_max_size")) {
+            for (int i = 0; i < Configs::Int("meats_count")*2; ++i){
+                AddMeat(GetSpawnPoint(piter->Position(), piter->Size() - Configs::Float("meats_size") - 1));
             }
             players.erase(piter);
             break;
