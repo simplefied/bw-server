@@ -118,7 +118,7 @@ void World::RoutePoisons()
         }
         Blobs::Player target = GetBlob(poison.Target());
         vector2f dir = target.Position() - poison.Position();
-        poison.Direction() = dir.normalize();
+        poison.Direction() = normalize(dir);
     }
 }
 

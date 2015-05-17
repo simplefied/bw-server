@@ -47,8 +47,8 @@ void Events::Turn::Do(Command cmd)
     catch (...) {
         return;
     }
-    if (ndir.length() > 100) ndir = ndir.normalize();
-    else if (ndir.length() < 10) ndir = vector2f(0, 0);
+    if (length(ndir) > 100) ndir = normalize(ndir);
+    else if (length(ndir) < 10) ndir = vector2f(0, 0);
     else ndir = ndir/100;
     try {
         aworld.GetBlob(cmd[0]).Direction() = ndir;

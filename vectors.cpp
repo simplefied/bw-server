@@ -13,30 +13,33 @@ point2f::point2f(float px, float py)
     this->y = py;
 }
 
-point2f& point2f::operator=(point2f p){
-	x = p.x;
-	y = p.y;
+point2f& point2f::operator=(const point2f& right)
+{
+    x = right.x;
+    y = right.y;
 	return *this;
 }
 
-point2f point2f::operator+(vector2f vec){
-	point2f tmp;
-	tmp.x = x + vec.x;
-	tmp.y = y + vec.y;
-	return tmp;
-}
-
-point2f point2f::operator+=(vector2f vec){
-	x += vec.x;
-	y += vec.y;
+point2f& point2f::operator+=(const vector2f& right)
+{
+    x += right.x;
+    y += right.y;
 	return *this;
 }
 
-vector2f point2f::operator-(point2f p){
-    vector2f tmp;
-	tmp.x = x - p.x;
-	tmp.y = y - p.y;
-	return tmp;
+const point2f operator+(const point2f& left, const vector2f& right)
+{
+    return point2f(left.x + right.x, left.y + right.y);
+}
+
+const point2f operator+(const vector2f& left, const point2f& right)
+{
+    return right + left;
+}
+
+const vector2f operator-(const point2f& left, const point2f& right)
+{
+    return vector2f(left.x - right.x, left.y - right.y);
 }
 
 vector2f::vector2f()
@@ -51,76 +54,94 @@ vector2f::vector2f(float vx, float vy)
     this->y = vy;
 }
 
-vector2f vector2f::operator+(vector2f vec){
-	vector2f tmp;
-	tmp.x = x + vec.x;
-	tmp.y = y + vec.y;
-	return tmp;
-}
-
-vector2f vector2f::operator-(vector2f vec){
-	vector2f tmp;
-	tmp.x = x - vec.x;
-	tmp.y = y - vec.y;
-	return tmp;
-}
-
-vector2f& vector2f::operator=(vector2f vec){
-	x = vec.x;
-	y = vec.y;
+vector2f& vector2f::operator=(const vector2f& right)
+{
+    x = right.x;
+    y = right.y;
 	return *this;
 }
 
-vector2f vector2f::operator+=(vector2f vec){
-	x += vec.x;
-	y += vec.y;
+vector2f& vector2f::operator+=(const vector2f& right)
+{
+    x += right.x;
+    y += right.y;
 	return *this;
 }
 
-vector2f vector2f::operator-=(vector2f vec){
-	x -= vec.x;
-	y -= vec.y;
+vector2f& vector2f::operator-=(const vector2f& right)
+{
+    x -= right.x;
+    y -= right.y;
 	return *this;
 }
 
-vector2f vector2f::operator*(float m){
-	vector2f tmp;
-	tmp.x = x*m;
-	tmp.y = y*m;
-	return tmp;
+const vector2f operator+(const vector2f& left, const vector2f& right)
+{
+    return vector2f(left.x + right.x, left.y + right.y);
 }
 
-vector2f vector2f::operator/(float m){
-	vector2f tmp;
-	tmp.x = x/m;
-	tmp.y = y/m;
-	return tmp;
+const vector2f operator-(const vector2f& left, const vector2f& right)
+{
+    return vector2f(left.x - right.x, left.y - right.y);
 }
 
-float vector2f::operator*(vector2f vec){
-	return x*vec.x + y*vec.y;
+const vector2f operator*(const vector2f& left, const float& right)
+{
+    return vector2f(left.x*right, left.y*right);
 }
 
-float vector2f::operator&(vector2f vec){
-	return x*vec.y - y*vec.x;
+const vector2f operator*(const float& left, const vector2f& right)
+{
+    return right*left;
 }
 
-float vector2f::length(){
-	return sqrt(x*x + y*y);
+const vector2f operator/(const vector2f& left, const float& right)
+{
+    return vector2f(left.x/right, left.y/right);
 }
 
-vector2f vector2f::normalize(){
-    if (length() < 0.000001) return vector2f(0, 0);
-    return *this/length();
+const float operator*(const vector2f& left, const vector2f& right)
+{
+    return left.x*right.x + left.y*right.y;
 }
 
-vector2f Line_t::normal(){
-	vector2f tmp;
-	tmp.x = p2.y - p1.y;
-	tmp.y = p1.x - p2.x;
-	return tmp.normalize();
+const float operator&(const vector2f& left, const vector2f& right)
+{
+    return left.x*right.y - left.y*right.x;
 }
 
-float distance(point2f p1, point2f p2){
-	return sqrt(pow(p1.x-p2.x, 2.f) + pow(p1.y-p2.y, 2.f));
+const float length(const vector2f& vector)
+{
+    return sqrt(vector.x*vector.x + vector.y*vector.y);
+}
+
+const vector2f normalize(const vector2f& vector)
+{
+    return vector/length(vector);
+}
+
+Line_t::Line_t()
+{
+    p2 = point2f(0, 1);
+}
+
+Line_t::Line_t(point2f first, point2f second)
+{
+    p1 = first;
+    p2 = second;
+}
+
+Line_t::Line_t(float first_x, float first_y, float second_x, float second_y)
+{
+    p1 = point2f(first_x, first_y);
+    p2 = point2f(second_x, second_y);
+}
+
+const vector2f normal(const Line_t& line)
+{
+    return normalize(vector2f(line.p2.y - line.p1.y, line.p1.x - line.p2.x));
+}
+
+const float distance(const point2f &left, const point2f &right){
+    return sqrt(pow(left.x-right.x, 2) + pow(left.y-right.y, 2));
 }

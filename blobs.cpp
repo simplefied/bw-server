@@ -13,7 +13,7 @@ point2f Blobs::Blob::Position() const
 
 void Blobs::Blob::CorrectPosition(vector2f offset)
 {
-    if (offset.length() > size_) return;
+    if (length(offset) > size_) return;
     position_ += offset;
 }
 

@@ -1,0 +1,17 @@
+# Comment
+
+# Integers
+server_port			"27161"
+server_fps			"100"
+not_healing_chance 	"5000"
+meats_count 		"100"
+poisons_min_mass 	"200"
+poisons_max_mass 	"600"
+max_poisons_count	"40"
+
+# Floats
+world_radius 		"900.0"
+meats_size 			"8.0"
+speed_factor 		"2.0"
+players_min_size 	"10.0"
+players_max_size 	"200.0"

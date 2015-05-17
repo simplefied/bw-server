@@ -6,7 +6,7 @@ void Configs::Load(string path)
 {
     // TODO migrate configs to third-party lib?
     ifstream file(path);
-    // TODO check for file exist (Boost Filesystem?)
+    if (!file) Logger::Error("the configuration file isn't available.");
     while (file) {
         string str;
         getline(file, str);
@@ -14,7 +14,7 @@ void Configs::Load(string path)
         if (str[0] == '#') continue;
         char name_buf[50], arg_buf[50];
         if(sscanf(str.c_str(), "%s \"%[^\"]\"", name_buf, arg_buf) != 2) {
-            Logger::Error("Bad line in config file: " + str);
+            Logger::Error("bad line in config file: " + str);
             continue;
         }
         string name(name_buf), arg(arg_buf);
@@ -24,7 +24,7 @@ void Configs::Load(string path)
                 floats[name] = float_arg;
             }
             catch (...) {
-                Logger::Error("Bad argument in config file: " + str);
+                Logger::Error("bad argument in config file: " + str);
             }
         } else {
             try {
@@ -32,7 +32,7 @@ void Configs::Load(string path)
                 ints[name] = int_arg;
             }
             catch (...) {
-                Logger::Error("Bad argument in config file: " + str);
+                Logger::Error("bad argument in config file: " + str);
             }
         }
     }

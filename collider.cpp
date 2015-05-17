@@ -25,7 +25,7 @@ void Collider::CollidePvM()
     for (auto piter = world_.players.begin(); piter != world_.players.end(); ++piter) {
         for (auto miter = temp_meats.begin(); miter != temp_meats.end(); ++miter) {
             if (miter->first) continue;
-            if ((piter->Position() - miter->second.Position()).length() < piter->Size() + miter->second.Size()) {
+            if (length(piter->Position() - miter->second.Position()) < piter->Size() + miter->second.Size()) {
                 piter->Eat(miter->second.Size());
                 miter->first = true;
             }
@@ -53,7 +53,7 @@ void Collider::CollidePvP()
         for (auto small = temp_players.begin(); small != temp_players.end(); ++small) {
             if (small != big) {
                 if (small->first) continue;
-                if ((big->second.Position() - small->second.Position()).length() < big->second.Size()) {
+                if (length(big->second.Position() - small->second.Position()) < big->second.Size()) {
                     if (big->second.Size() > small->second.Size()) {
                         big->second.Eat(small->second.Size());
                         small->first = true;
@@ -73,9 +73,9 @@ void Collider::CollideWithWorld()
 {
     for (auto &player : world_.players) {
         vector2f wv = point2f(0, 0) - player.Position();
-        float radius = wv.length() + player.Size();
+        float radius = length(wv) + player.Size();
         if (radius <= Configs::Float("world_radius")) continue;
-        player.CorrectPosition(wv.normalize()*(radius - Configs::Float("world_radius")));
+        player.CorrectPosition(normalize(wv)*(radius - Configs::Float("world_radius")));
     }
 }
 
@@ -93,7 +93,7 @@ void Collider::CollideWithPoison()
     for (auto big = temp_players.begin(); big != temp_players.end(); ++big) {
         for (auto small = temp_poisons.begin(); small != temp_poisons.end(); ++small) {
             if (small->first) continue;
-            if ((big->Position() - small->second.Position()).length() < big->Size()) {
+            if (length(big->Position() - small->second.Position()) < big->Size()) {
                 if (big->Size() >= Configs::Float("players_min_size")) {
                     big->Heal(small->second.Size());
                     small->first = true;
