@@ -8,4 +8,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # link the libraries to the executable
-target_link_libraries (${PROJECT_NAME} boost_system)
+target_link_libraries (${PROJECT_NAME} pthread boost_system)
