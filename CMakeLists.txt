@@ -9,3 +9,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # link the libraries to the executable
 target_link_libraries (${PROJECT_NAME} pthread boost_system)
+
+# Install rules
+INSTALL(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION usr/bin)
+INSTALL(FILES server.conf.default DESTINATION etc/${PROJECT_NAME} RENAME server.conf)

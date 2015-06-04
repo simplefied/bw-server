@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    Configs::Load("server.conf");
+    Configs::Load("/etc/bw-server/server.conf");
     Socket socket(Configs::Int("server_port"));
     Clients clients;
     World world;
