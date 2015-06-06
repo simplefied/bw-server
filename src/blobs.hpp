@@ -37,6 +37,11 @@ namespace Blobs {
     {
     public:
         Meat(point2f position);
+        std::string Position_str() const;
+        std::string Size_str() const;
+    private:
+        char size_str_[16];
+        char position_str_[16];
     };
 
     class Player : public MovableBlob

@@ -28,20 +28,24 @@ string EncDecManager::Encode()
     ans += string(buf);
     sprintf(buf, "%.1f\n", Configs::Float("world_radius"));
     ans += string(buf);
-    for (auto player : players) {
+    for (auto& player : players) {
         point2f pos = player.Position();
         sprintf(buf, "%s %.1f %.1f %.1f\n", player.Name().c_str(), player.Size(), pos.x, pos.y);
         ans += string(buf);
     }
-    for (auto poison : poisons) {
+    for (auto& poison : poisons) {
         point2f pos = poison.Position();
         sprintf(buf, "%s %.1f %.1f %.1f\n", "poison", poison.Size(), pos.x, pos.y);
         ans += string(buf);
     }
-    for (auto meat : meats) {
-        point2f pos = meat.Position();
-        sprintf(buf, "%s %.1f %.1f %.1f\n", "meat", meat.Size(), pos.x, pos.y);
-        ans += string(buf);
+    // Meats size and position precomputed, because they are static and sprintf is too slow.
+    for (auto& meat : meats) {
+        ans += "meat";
+        ans += ' ';
+        ans += meat.Size_str();
+        ans += ' ';
+        ans += meat.Position_str();
+        ans += '\n';
     }
     if (ans.size() > 8192) Logger::Notice("Warning: packet size is too big.");
     return ans;

@@ -38,6 +38,18 @@ void Blobs::MovableBlob::Step()
 
 Blobs::Meat::Meat(point2f position) : Blob(position, Configs::Float("meats_size"))
 {
+    sprintf(position_str_, "%.1f %.1f", position.x, position.y);
+    sprintf(size_str_, "%.1f", Configs::Float("meats_size"));
+}
+
+string Blobs::Meat::Position_str() const
+{
+    return string(position_str_);
+}
+
+string Blobs::Meat::Size_str() const
+{
+    return string(size_str_);
 }
 
 Blobs::Player::Player(point2f position, const std::string &name)
